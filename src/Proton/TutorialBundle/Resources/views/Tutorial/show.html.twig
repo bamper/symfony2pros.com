@@ -1,0 +1,21 @@
+{% extends "ProtonTutorialBundle::layout.html.twig" %}
+
+{% block title %}Tutorial - {{ tutorial.title }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/comments.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/comments.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery/jquery.form.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>{{ tutorial.title }}</h1>
+<p>posted by {{ tutorial.author.username }} on {{ tutorial.createdat.format('d-M-Y') }}</p>
+<p>{{ tutorial.description }}</p>
+<p>{{ tutorial.content|markdown }}</p>
+
+{% render "FOSCommentBundle:Thread:showFlat" with {"id": tutorial.slug, "sorter": "date_desc"} %}
+{% endblock %}

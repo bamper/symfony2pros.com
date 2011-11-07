@@ -1,0 +1,31 @@
+{% extends "ProtonQnABundle::layout.html.twig" %}
+
+{% block title %}Question - {{ question.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ question.title }}</h1>
+<p>posted by {{ question.author.username }} on {{ question.createdat.format('d-M-Y') }}</p>
+<p>{{ question.content|markdown }}</p>
+
+<hr />
+
+{% set count = question.answers|length %}
+<h1>{% transchoice count %}
+    {0} 0 Answers|{1} 1 Answer|]1,Inf] %count% Answers
+{% endtranschoice %}</h1>
+{% for answer in answers %}
+<div id="answer-{{ answer.id }}" class="answer answer-{{ answer.id }}">
+    <p>By {{ answer.author.username }}</p>
+    <p>{{ answer.content|markdown }}</p>
+</div>
+{% endfor %}
+{% if not has_answered %}
+<form method="post" action="{{ path('answer_create', {"question_id": question.id}) }}">
+    <div class="clearfix">
+        {{ form_widget(answer_form.content, {'attr': {'class': 'span10'}}) }}
+    </div>
+    {{ form_rest(answer_form) }}
+    <input type="submit" />
+</form>
+{% endif %}
+{% endblock %}

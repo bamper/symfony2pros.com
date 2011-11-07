@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Welcome!{% endblock %} :: Symfony2Pros</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+{% block stylesheets %}
+{% endblock %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/prettify.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="{{ path('proton_homepage') }}">Symfony2Pros</a>
+          <ul class="nav">
+            <li class="active"><a href="{{ path('proton_homepage') }}">Home</a></li>
+            <li><a href="{{ path('tutorial') }}">Tutorials</a></li>
+            <li><a href="{{ path('question') }}">Q&amp;A</a></li>
+          </ul>
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+          <p class="pull-right">Logged in as <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a></p>
+{% else %}
+          <form class="pull-right" action="{{ path('fos_user_security_check') }}" method="post">
+            <input class="span4" placeholder="username" type="text" id="username" name="_username" value="" />
+            <input class="span4" placeholder="password" type="password" id="password" name="_password" />
+            <input type="submit" id="_submit" name="_submit" value="Login" />
+          </form>
+{% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="sidebar">
+        <div class="well">
+          <h5>Main</h5>
+          <ul>
+            <li><a href="{{ path('proton_homepage') }}">Home</a></li>
+            <li><a href="{{ path('fos_user_profile_show') }}">Your Profile</a></li>
+            <li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
+          </ul>
+          <h5>Tutorials</h5>
+          <ul>
+            <li><a href="{{ path('tutorial') }}">Read</a></li>
+            <li><a href="{{ path('tutorial_new') }}">Write</a></li>
+          </ul>
+          <h5>Q&amp;A</h5>
+          <ul>
+            <li><a href="{{ path('question') }}">Answer</a></li>
+            <li><a href="{{ path('question_new') }}">Ask</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="content">
+{% block content %}{% endblock content %}
+        <footer>
+{% block footer %}
+          <p>
+              site &copy; 2011 Proton Webworks; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/"><img src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br />
+              lovingly crafted with HTML5+CSS3 using <a href="http://twitter.github.com/bootstrap">twitter bootstrap</a>
+          </p>
+{% endblock footer %}
+        </footer>
+      </div>
+    </div>
+
+  </body>
+</html>

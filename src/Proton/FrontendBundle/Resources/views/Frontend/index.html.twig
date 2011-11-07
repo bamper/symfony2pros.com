@@ -1,0 +1,52 @@
+{% extends "ProtonFrontendBundle::layout.html.twig" %}
+
+{% block content %}
+<div class="hero-unit">
+  <h1>Symfony2 Q&amp;A and tutorials?<br />We got that.</h1>
+  <p>The unofficial community for user-contributed and moderated questions, answers and how-to tutorials for <a href="http://symfony.com/">Symfony2</a></p>
+{% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+  <p>
+        <a class="btn primary large" href="{{ path('fos_user_registration_register') }}">Get Started &raquo;</a>
+      or <a href="{{ path('fos_user_security_login') }}">login now</a>
+  </p>
+{% else %}
+  <p>
+      <a class="btn primary large" href="{{ path('question_new') }}">Ask a question &raquo;</a>
+      <a class="btn primary large" href="{{ path('tutorial_new') }}">Write a tutorial &raquo;</a>
+  </p>
+{% endif %}
+</div>
+
+<div class="row">
+    <div class="span16">
+        <h1>Recent Questions <small>(<a href="{{ path('question') }}">view more</a>)</small></h1>
+    </div>
+</div>
+<div class="row">
+{% for question in questions %}
+    <div class="span8">
+        <h2><a href="{{ path('question_show', {"slug":question.slug}) }}">{{ question.title }}</a> <small>by {{ question.author.username }}</small></h2>
+        {% set count = question.answers|length %}
+        <p>{% transchoice count %}
+    {0} 0 answers|{1} 1 answer|]1,Inf] %count% answers
+{% endtranschoice %}</p>
+    </div>
+{% endfor %}
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="span16">
+        <h1>Recent Tutorials <small>(<a href="{{ path('tutorial') }}">view more</a>)</small></h1>
+    </div>
+</div>
+<div class="row">
+{% for tutorial in tutorials %}
+    <div class="span8">
+        <h2><a href="{{ path('tutorial_show', {"slug":tutorial.slug}) }}">{{ tutorial.title }}</a> <small>by {{ tutorial.author.username }}</small></h2>
+        <p>{{ tutorial.description|truncate(50) }}</p>
+    </div>
+{% endfor %}
+</div>
+{% endblock content %}

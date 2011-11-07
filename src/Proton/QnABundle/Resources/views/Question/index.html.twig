@@ -1,0 +1,13 @@
+{% extends "ProtonQnABundle::layout.html.twig" %}
+
+{% block title %}Question List{% endblock %}
+
+{% block content %}
+<h1>Questions</h1>
+{% for question in questions %}
+<div>
+    <h2><a href="{{ path('question_show', {"slug": question.slug}) }}">{{ question.title }}</a></h2>
+    <p>posted by {{ question.author.username }} on {{ question.createdat.format('d-M-Y') }}</p>
+</div>
+{% endfor %}
+{% endblock %}
