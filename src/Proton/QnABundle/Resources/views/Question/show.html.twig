@@ -19,7 +19,7 @@
     <p>{{ answer.content|markdown }}</p>
 </div>
 {% endfor %}
-{% if not has_answered %}
+{% if can_answer %}
 <form method="post" action="{{ path('answer_create', {"question_id": question.id}) }}">
     <div class="clearfix">
         {{ form_widget(answer_form.content, {'attr': {'class': 'span10'}}) }}

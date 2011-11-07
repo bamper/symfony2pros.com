@@ -6,7 +6,7 @@
   <p>The unofficial community for user-contributed and moderated questions, answers and how-to tutorials for <a href="http://symfony.com/">Symfony2</a></p>
 {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
   <p>
-        <a class="btn primary large" href="{{ path('fos_user_registration_register') }}">Get Started &raquo;</a>
+      <a class="btn primary large" href="{{ path('fos_user_registration_register') }}">Create an Account &raquo;</a>
       or <a href="{{ path('fos_user_security_login') }}">login now</a>
   </p>
 {% else %}

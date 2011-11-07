@@ -55,8 +55,13 @@
           <h5>Main</h5>
           <ul>
             <li><a href="{{ path('proton_homepage') }}">Home</a></li>
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <li><a href="{{ path('fos_user_profile_show') }}">Your Profile</a></li>
             <li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
+{% else %}
+            <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
+            <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
+{% endif %}
           </ul>
           <h5>Tutorials</h5>
           <ul>

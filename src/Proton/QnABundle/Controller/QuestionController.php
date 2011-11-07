@@ -36,7 +36,7 @@ class QuestionController extends Controller
     /**
      * Displays a form to create a new Question entity.
      *
-     * @Route("/new", name="question_new")
+     * @Route("/ask", name="question_new")
      * @Template()
      */
     public function newAction()
@@ -207,16 +207,16 @@ class QuestionController extends Controller
                 'question' => $question,
                 'author' => $this->getUser(),
             ));
-            $has_answered = null !== $answer;
+            $can_answer = null === $answer;
         } else {
-            $has_answered = true;
+            $can_answer = false;
         }
 
         return array(
             'question' => $question,
             'answers' => $question->getAnswers(),
             'answer_form' => $answer_form->createView(),
-            'has_answered' => $has_answered,
+            'can_answer' => $can_answer,
         );
     }
 }
