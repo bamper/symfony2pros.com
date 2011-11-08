@@ -17,6 +17,10 @@ framework:
         auto_start:     true
 
 services:
+#    twig.extension.sandbox:
+#        class: Twig_Extension_Sandbox
+#        tags:
+#            - { name: twig.extension }
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
         tags:

@@ -23,10 +23,12 @@ $loader->registerNamespaces(array(
     'Stof'             => __DIR__.'/../vendor/bundles',
     'Gedmo'            => __DIR__.'/../vendor/gedmo-doctrine-extensions/lib',
     'Knp'              => __DIR__.'/../vendor/bundles',
+    'Exercise'         => __DIR__.'/../vendor/bundles',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
     'Twig_'            => __DIR__.'/../vendor/twig/lib',
+    'HTMLPurifier'     => __DIR__.'/../vendor/htmlpurifier/library',
 ));
 
 // intl

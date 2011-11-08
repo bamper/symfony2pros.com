@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new FOS\CommentBundle\FOSCommentBundle(),
+            new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

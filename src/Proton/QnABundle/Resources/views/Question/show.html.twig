@@ -5,7 +5,7 @@
 {% block content %}
 <h1>{{ question.title }}</h1>
 <p>posted by {{ question.author.username }} on {{ question.createdat.format('d-M-Y') }}</p>
-<p>{{ question.content|markdown }}</p>
+{{ question.content }}
 
 <hr />
 
@@ -16,7 +16,7 @@
 {% for answer in answers %}
 <div id="answer-{{ answer.id }}" class="answer answer-{{ answer.id }}">
     <p>By {{ answer.author.username }}</p>
-    <p>{{ answer.content|markdown }}</p>
+    {{ answer.content }}
 </div>
 {% endfor %}
 {% if can_answer %}

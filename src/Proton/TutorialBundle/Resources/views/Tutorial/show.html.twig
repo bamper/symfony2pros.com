@@ -15,7 +15,7 @@
 <h1>{{ tutorial.title }}</h1>
 <p>posted by {{ tutorial.author.username }} on {{ tutorial.createdat.format('d-M-Y') }}</p>
 <p>{{ tutorial.description }}</p>
-<p>{{ tutorial.content|markdown }}</p>
+<p>{{ tutorial.content }}</p>
 
 {% render "FOSCommentBundle:Thread:showFlat" with {"id": tutorial.slug, "sorter": "date_desc"} %}
 {% endblock %}
