@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Proton\TutorialBundle\ProtonTutorialBundle(),
             new Proton\QnABundle\ProtonQnABundle(),
             new Proton\CommentBundle\ProtonCommentBundle(),
+            new Proton\CoreBundle\ProtonCoreBundle(),
 
             // 3rd-party bundles
             new FOS\UserBundle\FOSUserBundle(),

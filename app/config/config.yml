@@ -95,3 +95,13 @@ fos_comment:
     service:
         blamer:
             comment: fos_comment.blamer.comment.security
+
+exercise_html_purifier:
+    simple:
+        Cache.SerializerPath: %kernel.cache_dir%/htmlpurifier
+        HTML.Nofollow: true
+        Core.EscapeInvalidTags: true
+
+knp_markdown:
+    parser:
+        service: proton.markdown.parser

@@ -1,0 +1,5 @@
+services:
+    proton.markdown.parser:
+        class: Proton\CoreBundle\Parser\PurifyMarkdownParser
+        arguments:
+            purifier: "@exercise_html_purifier.simple"
