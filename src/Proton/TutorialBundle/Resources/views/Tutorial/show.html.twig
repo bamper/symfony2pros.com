@@ -11,10 +11,13 @@
     <script type="text/javascript" src="{{ asset('js/jquery/jquery.form.js') }}"></script>
 {% endblock %}
 
+{% from "ProtonUserBundle::macros.html.twig" import placard %}
+
 {% block content %}
 <div id="tutorial-meta" class="well">
     <h1>{{ tutorial.title }}</h1>
-    <p>posted by {{ tutorial.author.username }} on {{ tutorial.createdat.format('d-M-Y') }}</p>
+    <p>Written {{ tutorial.createdat.format('d-M-Y') }}</p>
+    {{ placard(tutorial.author) }}
     <p><strong>Description:</strong> {{ tutorial.description }}</p>
 </div>
 <p>{{ tutorial.content|markdown }}</p>

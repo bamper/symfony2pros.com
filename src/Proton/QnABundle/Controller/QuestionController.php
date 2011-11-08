@@ -74,8 +74,10 @@ class QuestionController extends Controller
 
         if ($form->isValid()) {
             $entity->setAuthor($this->getUser());
+            $this->getUser()->incrementQuestionCount();
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
+            $em->persist($this->getUser());
             $em->flush();
 
             return $this->redirect($this->generateUrl('question_show', array('slug' => $entity->getSlug())));

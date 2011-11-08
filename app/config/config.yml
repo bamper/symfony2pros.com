@@ -105,3 +105,6 @@ exercise_html_purifier:
 knp_markdown:
     parser:
         service: proton.markdown.parser
+
+ornicar_gravatar:
+    size: 32

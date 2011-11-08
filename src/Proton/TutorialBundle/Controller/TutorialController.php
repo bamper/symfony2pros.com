@@ -73,8 +73,10 @@ class TutorialController extends Controller
 
         if ($form->isValid()) {
             $entity->setAuthor($this->getUser());
+            $this->getUser()->incrementTutorialCount();
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
+            $em->persist($this->getUser());
             $em->flush();
 
             return $this->redirect($this->generateUrl('tutorial_show', array('slug' => $entity->getSlug())));

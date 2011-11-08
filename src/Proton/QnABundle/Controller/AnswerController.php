@@ -78,8 +78,12 @@ class AnswerController extends Controller
 
         if ($form->isValid()) {
             $entity->setAuthor($this->getUser());
+            $this->getUser()->incrementAnswerCount();
+            $question->incrementAnswerCount();
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
+            $em->persist($question);
+            $em->persist($this->getUser());
             $em->flush();
 
             return $this->redirect($this->generateUrl('question_show', array('slug' => $question->getSlug())));

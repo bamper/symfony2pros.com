@@ -1,0 +1,6 @@
+services:
+    proton_tutorial.manager.tutorial:
+        class: Proton\TutorialBundle\Entity\TutorialManager
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+            class: Proton\TutorialBundle\Entity\Tutorial

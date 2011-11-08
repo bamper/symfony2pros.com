@@ -37,6 +37,11 @@ class Question extends BaseQuestion
     protected $answers;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $answer_count = 0;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Proton\UserBundle\Entity\User")
      */
     protected $author;

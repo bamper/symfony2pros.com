@@ -11,6 +11,7 @@ abstract class Question implements QuestionInterface
     protected $created_at;
     protected $updated_at;
     protected $answers = array();
+    protected $answer_count = 0;
     protected $author;
     protected $title;
     protected $slug;
@@ -39,6 +40,25 @@ abstract class Question implements QuestionInterface
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    public function setAnswerCount($answer_count)
+    {
+        $this->answer_count = (int)$answer_count;
+    }
+
+    public function getAnswerCount()
+    {
+        return $this->answer_count;
+    }
+
+    public function incrementAnswerCount($by = 1)
+    {
+        $count = $this->getAnswerCount();
+        $count += (int)$by;
+        $this->setAnswerCount($count);
+
+        return $count;
     }
     
     public function setAuthor(UserInterface $author)

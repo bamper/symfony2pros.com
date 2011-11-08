@@ -85,3 +85,7 @@
 [htmlpurifier]
     git=git://github.com/ezyang/htmlpurifier.git
     target=htmlpurifier
+
+[OrnicarGravatarBundle]
+    git=git://github.com/ornicar/GravatarBundle.git
+    target=bundles/Ornicar/GravatarBundle

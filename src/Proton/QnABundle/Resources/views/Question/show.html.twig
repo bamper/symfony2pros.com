@@ -2,10 +2,13 @@
 
 {% block title %}Question - {{ question.title }}{% endblock %}
 
+{% from "ProtonUserBundle::macros.html.twig" import placard %}
+
 {% block content %}
 <div id="question-meta" class="well">
     <h1>{{ question.title }}</h1>
-    <p>posted by {{ question.author.username }} on {{ question.createdat.format('d-M-Y') }}</p>
+    <p>Asked on {{ question.createdat.format('d-M-Y') }}</p>
+    {{ placard(question.author) }}
 </div>
 {{ question.content|markdown }}
 
@@ -17,7 +20,7 @@
 {% endtranschoice %}</h1>
 {% for answer in answers %}
 <div id="answer-{{ answer.id }}" class="answer answer-{{ answer.id }}">
-    <p>By {{ answer.author.username }}</p>
+    {{ placard(answer.author) }}
     {{ answer.content|markdown }}
 </div>
 {% endfor %}

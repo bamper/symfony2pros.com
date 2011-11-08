@@ -98,6 +98,14 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/prettify.js') }}"></script>
     <script>$(function () { prettyPrint() })</script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap-twipsy.js') }}"></script>
+    <script>
+        $(function () {
+            $("a[rel=twipsy]").twipsy({
+                live: true
+            })
+        })
+    </script>
 {% block javascripts %}
 {% endblock %}
   </body>
