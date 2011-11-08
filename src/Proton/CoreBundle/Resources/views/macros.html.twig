@@ -1,0 +1,3 @@
+{% macro time_formatter(datetime, verb) %}
+{{ verb|default('Written') }} <abbr title="{{ datetime.format('d-M-Y H:i:s') }}">{{ time_diff(datetime) }}</abbr>
+{% endmacro %}

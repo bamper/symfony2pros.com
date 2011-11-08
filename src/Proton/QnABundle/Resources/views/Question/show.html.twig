@@ -3,12 +3,13 @@
 {% block title %}Question - {{ question.title }}{% endblock %}
 
 {% from "ProtonUserBundle::macros.html.twig" import placard %}
+{% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
 
 {% block content %}
 <div id="question-meta" class="well">
     <h1>{{ question.title }}</h1>
-    <p>Asked on {{ question.createdat.format('d-M-Y') }}</p>
     {{ placard(question.author) }}
+    <p>{{ time_formatter(question.createdat, 'Asked') }}</p>
 </div>
 {{ question.content|markdown }}
 
@@ -21,6 +22,7 @@
 {% for answer in answers %}
 <div id="answer-{{ answer.id }}" class="answer answer-{{ answer.id }}">
     {{ placard(answer.author) }}
+    <p>{{ time_formatter(answer.createdat, 'Answered') }}</p>
     {{ answer.content|markdown }}
 </div>
 {% endfor %}

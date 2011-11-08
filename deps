@@ -89,3 +89,7 @@
 [OrnicarGravatarBundle]
     git=git://github.com/ornicar/GravatarBundle.git
     target=bundles/Ornicar/GravatarBundle
+
+[KnpTimeBundle]
+    git=git://github.com/knplabs/KnpTimeBundle.git
+    target=bundles/Knp/Bundle/TimeBundle

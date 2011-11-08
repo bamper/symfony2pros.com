@@ -12,12 +12,13 @@
 {% endblock %}
 
 {% from "ProtonUserBundle::macros.html.twig" import placard %}
+{% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
 
 {% block content %}
 <div id="tutorial-meta" class="well">
     <h1>{{ tutorial.title }}</h1>
-    <p>Written {{ tutorial.createdat.format('d-M-Y') }}</p>
     {{ placard(tutorial.author) }}
+    <p>{{ time_formatter(tutorial.createdat) }}</p>
     <p><strong>Description:</strong> {{ tutorial.description }}</p>
 </div>
 <p>{{ tutorial.content|markdown }}</p>

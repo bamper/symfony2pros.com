@@ -2,12 +2,14 @@
 
 {% block title %}Tutorial List{% endblock %}
 
+{% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
+
 {% block content %}
 <h1>Tutorials</h1>
 {% for tutorial in tutorials %}
 <div>
     <h2><a href="{{ path('tutorial_show', {"slug": tutorial.slug}) }}">{{ tutorial.title }}</a></h2>
-    <p>posted by {{ tutorial.author.username }} on {{ tutorial.createdat.format('d-M-Y') }}</p>
+    <p>{{ time_formatter(tutorial.createdat, 'posted by ' ~ tutorial.author.username) }}</p>
     <p>{{ tutorial.description }}</p>
 </div>
 {% endfor %}
