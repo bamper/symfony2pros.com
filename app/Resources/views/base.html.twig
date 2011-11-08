@@ -17,11 +17,8 @@
         padding-top: 60px;
       }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/prettify.css') }}">
 {% block stylesheets %}
-{% endblock %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/prettify.js') }}"></script>
-{% block javascripts %}
 {% endblock %}
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -98,5 +95,10 @@
       </div>
     </div>
 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/prettify.js') }}"></script>
+    <script>$(function () { prettyPrint() })</script>
+{% block javascripts %}
+{% endblock %}
   </body>
 </html>

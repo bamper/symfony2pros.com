@@ -3,8 +3,10 @@
 {% block title %}Question - {{ question.title }}{% endblock %}
 
 {% block content %}
-<h1>{{ question.title }}</h1>
-<p>posted by {{ question.author.username }} on {{ question.createdat.format('d-M-Y') }}</p>
+<div id="question-meta" class="well">
+    <h1>{{ question.title }}</h1>
+    <p>posted by {{ question.author.username }} on {{ question.createdat.format('d-M-Y') }}</p>
+</div>
 {{ question.content|markdown }}
 
 <hr />
