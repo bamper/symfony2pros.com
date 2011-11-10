@@ -10,6 +10,10 @@
     <h1>{{ question.title }}</h1>
     {{ placard(question.author) }}
     <p>{{ time_formatter(question.createdat, 'Asked') }}</p>
+{% set views = question.views %}
+    <p>{% transchoice views %}
+        {0} 0 views|{1} 1 view|]1,Inf] %views% views
+    {% endtranschoice %}</p>
     <p>
 {% if canEdit %}
         <a class="btn" data-controls-modal="edit-modal" data-keyboard="true" data-backdrop="static" >Edit</a>

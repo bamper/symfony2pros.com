@@ -61,4 +61,9 @@ class Tutorial extends BaseTutorial
      */
     protected $trashed = false;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views = 1;
+
 }

@@ -49,6 +49,13 @@ class QuestionController extends Controller
             $canEdit = true;
         }
 
+        if (!$this->getUser() instanceof UserInterface || !$this->getUser()->equals($question->getAuthor())) {
+            $question->incrementViews();
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($question);
+            $em->flush();
+        }
+
         return $this->render('ProtonQnABundle:Question:show.html.twig', array(
             'question' => $question,
             'canAnswer' => $canAnswer,

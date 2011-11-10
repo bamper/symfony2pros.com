@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Proton\TutorialBundle\Entity\Tutorial;
 use Proton\TutorialBundle\Form\TutorialType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Tutorial controller.
@@ -193,6 +194,13 @@ class TutorialController extends Controller
      */
     public function showAction(Tutorial $tutorial)
     {
+        if (!$this->getUser() instanceof UserInterface || !$this->getUser()->equals($tutorial->getAuthor())) {
+            $tutorial->incrementViews();
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($tutorial);
+            $em->flush();
+        }
+
         return array(
             'tutorial'      => $tutorial,
         );
