@@ -78,7 +78,7 @@ class QuestionController extends Controller
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('proton_qna_questions_show', array(
-                    'id' => $question->getId(),
+                    'slug' => $question->getSlug(),
                 )));
             }
         }
@@ -107,6 +107,8 @@ class QuestionController extends Controller
 
                 $em->persist($question);
                 $em->flush();
+
+                $this->container->get('session')->setFlash('notice', 'Your changes have been saved.');
 
                 return $this->redirect($this->generateUrl('proton_qna_questions_show', array(
                     'slug' => $question->getSlug(),
@@ -140,6 +142,8 @@ class QuestionController extends Controller
                 $em->persist($question);
                 $em->persist($question->getAuthor());
                 $em->flush();
+
+                $this->container->get('session')->setFlash('notice', 'Question trashed.');
 
                 return $this->redirect($this->generateUrl('proton_qna_questions_list'));
             }

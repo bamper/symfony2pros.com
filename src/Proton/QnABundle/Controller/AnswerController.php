@@ -92,6 +92,8 @@ class AnswerController extends Controller
                 $em->persist($answer);
                 $em->flush();
 
+                $this->container->get('session')->setFlash('notice', 'Your changes have been saved.');
+
                 return $this->redirect($this->generateUrl('proton_qna_answers_show', array(
                     'id' => $answer->getId(),
                 )));
@@ -124,6 +126,8 @@ class AnswerController extends Controller
                 $em->persist($answer);
                 $em->persist($answer->getAuthor());
                 $em->flush();
+
+                $this->container->get('session')->setFlash('notice', 'Answer trashed.');
 
                 return $this->redirect($this->generateUrl('proton_qna_answers_list'));
             }

@@ -84,6 +84,12 @@
         </div>
       </div>
       <div class="content">
+{% if app.session.hasFlash('notice') %}
+          <div class="alert-message success fade in" data-alert="alert">
+              <a class="close" href="#">x</a>
+              <p>{{ app.session.flash('notice') }}</p>
+          </div>
+{% endif %}
 {% block content %}{% endblock content %}
         <footer>
 {% block footer %}
@@ -100,6 +106,7 @@
     <script>$(function () { prettyPrint() })</script>
     <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap-twipsy.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap-modal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap-alerts.js') }}"></script>
     <script>
         $(function () {
             $("a[rel=twipsy]").twipsy({
