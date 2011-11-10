@@ -11,7 +11,7 @@
   </p>
 {% else %}
   <p>
-      <a class="btn primary large" href="{{ path('question_new') }}">Ask a question &raquo;</a>
+      <a class="btn primary large" href="{{ path('proton_qna_questions_new') }}">Ask a question &raquo;</a>
       <a class="btn primary large" href="{{ path('tutorial_new') }}">Write a tutorial &raquo;</a>
   </p>
 {% endif %}
@@ -19,13 +19,13 @@
 
 <div class="row">
     <div class="span16">
-        <h1>Recent Questions <small>(<a href="{{ path('question') }}">view more</a>)</small></h1>
+        <h1>Recent Questions <small>(<a href="{{ path('proton_qna_questions_list') }}">view more</a>)</small></h1>
     </div>
 </div>
 <div class="row">
 {% for question in questions %}
     <div class="span8">
-        <h2><a href="{{ path('question_show', {"slug":question.slug}) }}">{{ question.title }}</a> <small>by {{ question.author.username }}</small></h2>
+        <h2><a href="{{ path('proton_qna_questions_show', {"slug":question.slug}) }}">{{ question.title }}</a> <small>by {{ question.author.username }}</small></h2>
         {% set count = question.answercount %}
         <p>{% transchoice count %}
     {0} 0 answers|{1} 1 answer|]1,Inf] %count% answers

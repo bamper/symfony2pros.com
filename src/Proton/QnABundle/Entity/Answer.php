@@ -32,6 +32,7 @@ class Answer extends BaseAnswer
 
     /**
      * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $question;
 
@@ -44,5 +45,10 @@ class Answer extends BaseAnswer
      * @ORM\Column(type="text")
      */
     protected $content;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $trashed = false;
 
 }

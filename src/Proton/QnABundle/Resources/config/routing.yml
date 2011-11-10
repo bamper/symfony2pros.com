@@ -1,0 +1,7 @@
+proton_qna_questions:
+    resource: "@ProtonQnABundle/Resources/config/routing/questions.yml"
+    prefix: /questions
+
+proton_qna_answers:
+    resource: "@ProtonQnABundle/Resources/config/routing/answers.yml"
+    prefix: /answers

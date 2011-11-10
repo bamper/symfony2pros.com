@@ -1,0 +1,29 @@
+proton_qna_answers_list:
+    pattern: /
+    defaults: { _controller: ProtonQnABundle:Answer:list }
+    requirements:
+        _method: GET
+
+proton_qna_answers_new:
+    pattern: /{id}/new # question id
+    defaults: { _controller: ProtonQnABundle:Answer:new }
+    requirements:
+        id: \d+
+
+proton_qna_answers_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: ProtonQnABundle:Answer:edit }
+    requirements:
+        id: \d+
+
+proton_qna_answers_delete:
+    pattern: /{id}/delete
+    defaults: { _controller: ProtonQnABundle:Answer:delete }
+    requirements:
+        id: \d+
+
+proton_qna_answers_show:
+    pattern: /{slug}
+    defaults: { _controller: ProtonQnABundle:Answer:show }
+    requirements:
+        _method: GET

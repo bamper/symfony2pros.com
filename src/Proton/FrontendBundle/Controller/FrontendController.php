@@ -12,8 +12,16 @@ class FrontendController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $questions = $em->getRepository('ProtonQnABundle:Question')->findBy(array(), array('created_at' => 'DESC'), 4);
-        $tutorials = $em->getRepository('ProtonTutorialBundle:Tutorial')->findBy(array(), array('created_at' => 'DESC'), 4);
+        $questions = $em->getRepository('ProtonQnABundle:Question')->findBy(array(
+            'trashed' => false,
+        ), array(
+            'created_at' => 'DESC',
+        ), 4);
+        $tutorials = $em->getRepository('ProtonTutorialBundle:Tutorial')->findBy(array(
+            'trashed' => false,
+        ), array(
+            'created_at' => 'DESC',
+        ), 4);
 
         return $this->render('ProtonFrontendBundle:Frontend:index.html.twig', array(
             'questions' => $questions,

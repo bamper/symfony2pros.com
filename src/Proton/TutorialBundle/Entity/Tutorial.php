@@ -56,4 +56,9 @@ class Tutorial extends BaseTutorial
      */
     protected $content;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $trashed = false;
+
 }

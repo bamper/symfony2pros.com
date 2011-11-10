@@ -62,6 +62,11 @@ class Question extends BaseQuestion
      */
     protected $content;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $trashed = false;
+
     public function __construct()
     {
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();

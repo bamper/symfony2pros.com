@@ -13,6 +13,7 @@ abstract class Answer implements AnswerInterface
     protected $question;
     protected $author;
     protected $content;
+    protected $trashed;
 
     public function getId()
     {
@@ -57,6 +58,16 @@ abstract class Answer implements AnswerInterface
     public function getContent()
     {
         return $this->content;
+    }
+
+    public function setTrashed($trashed)
+    {
+        $this->trashed = $trashed;
+    }
+
+    public function isTrashed()
+    {
+        return $this->trashed;
     }
 
 }

@@ -15,6 +15,7 @@ abstract class Tutorial implements TutorialInterface
     protected $slug;
     protected $description;
     protected $content;
+    protected $trashed;
 
     public function getId()
     {
@@ -79,6 +80,16 @@ abstract class Tutorial implements TutorialInterface
     public function getContent()
     {
         return $this->content;
+    }
+
+    public function setTrashed($trashed)
+    {
+        $this->trashed = $trashed;
+    }
+
+    public function isTrashed()
+    {
+        return $this->trashed;
     }
 
 }

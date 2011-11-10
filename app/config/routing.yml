@@ -13,8 +13,7 @@ proton_tutorial:
     type: annotation
 
 proton_question:
-    resource: "@ProtonQnABundle/Controller/QuestionController.php"
-    type: annotation
+    resource: "@ProtonQnABundle/Resources/config/routing.yml"
 
 proton_answer:
     resource: "@ProtonQnABundle/Controller/AnswerController.php"

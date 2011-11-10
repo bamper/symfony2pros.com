@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('css/prettify.css') }}">
 {% block stylesheets %}
 {% endblock %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-20048133-6']);
@@ -41,7 +42,7 @@
           <ul class="nav">
             <li class="active"><a href="{{ path('proton_homepage') }}">Home</a></li>
             <li><a href="{{ path('tutorial') }}">Tutorials</a></li>
-            <li><a href="{{ path('question') }}">Q&amp;A</a></li>
+            <li><a href="{{ path('proton_qna_questions_list') }}">Q&amp;A</a></li>
           </ul>
 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <p class="pull-right">Logged in as <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a></p>
@@ -77,8 +78,8 @@
           </ul>
           <h5>Q&amp;A</h5>
           <ul>
-            <li><a href="{{ path('question') }}">Answer</a></li>
-            <li><a href="{{ path('question_new') }}">Ask</a></li>
+            <li><a href="{{ path('proton_qna_questions_list') }}">Answer</a></li>
+            <li><a href="{{ path('proton_qna_questions_new') }}">Ask</a></li>
           </ul>
         </div>
       </div>
@@ -95,10 +96,10 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/prettify.js') }}"></script>
     <script>$(function () { prettyPrint() })</script>
     <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap-twipsy.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap-modal.js') }}"></script>
     <script>
         $(function () {
             $("a[rel=twipsy]").twipsy({

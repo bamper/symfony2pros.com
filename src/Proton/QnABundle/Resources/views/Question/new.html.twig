@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Ask a question</h1>
 
-<form action="{{ path('question_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('proton_qna_questions_new') }}" method="post" {{ form_enctype(form) }}>
     <div class="clearfix">
         {{ form_label(form.title) }}
         <div class="input">
