@@ -34,11 +34,13 @@ class QuestionController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $answer = null;
         $canAnswer = false;
         if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $answer = $this->getDoctrine()->getRepository('ProtonQnABundle:Answer')->findOneBy(array(
                 'question' => $question,
                 'author' => $this->getUser(),
+                'trashed' => false,
             ));
             $canAnswer = null === $answer;
         }
@@ -59,6 +61,7 @@ class QuestionController extends Controller
         return $this->render('ProtonQnABundle:Question:show.html.twig', array(
             'question' => $question,
             'canAnswer' => $canAnswer,
+            'answer' => $answer,
             'canEdit' => $canEdit,
         ));
     }

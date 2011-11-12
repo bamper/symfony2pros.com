@@ -1,17 +1,26 @@
-<form id="question-edit-form" class="form-stacked" action="{{ path('proton_qna_questions_edit', {'id': question.id}) }}" method="post" {{ form_enctype(form) }}>
+{% extends "ProtonQnABundle::layout.html.twig" %}
+
+{% block title %}Editing "{{ question.title }}"{% endblock %}
+
+{% block content %}
+<h1>Editing "{{ question.title }}"</h1>
+
+<form method="POST">
     <div class="clearfix">
         {{ form_label(form.title) }}
         <div class="input">
             {{ form_errors(form.title) }}
-            {{ form_widget(form.title, { 'attr': {'class': 'span9'}}) }}
+            {{ form_widget(form.title, { 'attr': {'class': 'span10'}}) }}
         </div>
     </div>
     <div class="clearfix">
         {{ form_label(form.content) }}
         <div class="input">
             {{ form_errors(form.content) }}
-            {{ form_widget(form.content, { 'attr': {'class': 'span9'}}) }}
+            {{ form_widget(form.content, { 'attr': {'class': 'span10'}}) }}
         </div>
     </div>
     {{ form_rest(form) }}
+    <input class="btn primary" type="submit" />
 </form>
+{% endblock %}

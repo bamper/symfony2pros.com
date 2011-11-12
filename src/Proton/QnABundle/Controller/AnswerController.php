@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Proton\QnABundle\Entity\Question;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AnswerController extends Controller
 {
@@ -94,8 +95,8 @@ class AnswerController extends Controller
 
                 $this->container->get('session')->setFlash('notice', 'Your changes have been saved.');
 
-                return $this->redirect($this->generateUrl('proton_qna_answers_show', array(
-                    'id' => $answer->getId(),
+                return $this->redirect($this->generateUrl('proton_qna_questions_show', array(
+                    'slug' => $answer->getQuestion()->getSlug(),
                 )));
             }
         }
@@ -141,10 +142,8 @@ class AnswerController extends Controller
 
     private function canManage(Answer $answer)
     {
-        $securityUser = $this->container->get('security.context')->getToken()->getUser();
-
         return $this->container->get('security.context')->isGranted('ROLE_ADMIN')
-            || ($securityUser instanceof UserInterface && $securityUser->equals($answer->getAuthor()));
+            || ($this->getUser() instanceof UserInterface && $this->getUser()->equals($answer->getAuthor()));
     }
     
 }

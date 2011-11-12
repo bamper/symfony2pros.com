@@ -1,26 +1,8 @@
-{% extends "ProtonQnABundle::layout.html.twig" %}
-
-{% block content %}
-<h1>Answer edit</h1>
-
-<form action="{{ path('answer_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
+<form method="post" action="{{ path('proton_qna_answers_edit', {"id": answer.id}) }}">
+    <div class="clearfix">
+        {{ form_widget(form.content, {'attr': {'class': 'span10'}}) }}
+    </div>
+    {{ form_rest(form) }}
+    <p><span class="label notice">Note</span> Content parsed with <a href="http://michelf.com/projects/php-markdown/">markdown</a>.</p>
+    <input class="btn primary" type="submit" />
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('answer') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('answer_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
-{% endblock %}
