@@ -20,6 +20,18 @@
     {{ placard(tutorial.author) }}
     <p>{{ time_formatter(tutorial.createdat) }}</p>
     <p><strong>Description:</strong> {{ tutorial.description }}</p>
+    {% set views = tutorial.views %}
+    <p>{% transchoice views %}
+        {0} 0 views|{1} 1 view|]1,Inf] %views% views
+    {% endtranschoice %}</p>
+    <p>
+{% if canEdit %}
+        <a class="btn" href="{{ path('proton_tutorial_tutorials_edit', {'id': tutorial.id}) }}">Edit</a>
+{% endif %}
+{% if is_granted('ROLE_ADMIN') %}
+        <a class="btn danger" href="{{ path('proton_tutorial_tutorials_delete', {'id': tutorial.id}) }}">Trash</a>
+{% endif %}
+    </p>
 </div>
 <p>{{ tutorial.content|markdown }}</p>
 

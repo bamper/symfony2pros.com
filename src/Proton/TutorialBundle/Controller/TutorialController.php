@@ -3,43 +3,56 @@
 namespace Proton\TutorialBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Proton\TutorialBundle\Entity\Tutorial;
 use Proton\TutorialBundle\Form\TutorialType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Tutorial controller.
- *
- * @Route("/tutorials")
- */
 class TutorialController extends Controller
 {
-    /**
-     * Lists all Tutorial entities.
-     *
-     * @Route("/", name="tutorial")
-     * @Template()
-     */
-    public function indexAction()
+
+    public function listAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $tutorials = $em->getRepository('ProtonTutorialBundle:Tutorial')->findBy(array(), array('created_at' => 'DESC'));
+        $tutorials = $em->getRepository('ProtonTutorialBundle:Tutorial')->findBy(array(
+            'trashed' => false,
+        ), array(
+            'created_at' => 'DESC',
+        ));
 
-        return array('tutorials' => $tutorials);
+        return $this->render('ProtonTutorialBundle:Tutorial:list.html.twig', array(
+            'tutorials' => $tutorials,
+        ));
     }
 
-    /**
-     * Displays a form to create a new Tutorial entity.
-     *
-     * @Route("/new", name="tutorial_new")
-     * @Template()
-     */
-    public function newAction()
+    public function showAction(Tutorial $tutorial)
+    {
+        if ($tutorial->isTrashed() && !$this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new NotFoundHttpException();
+        }
+
+        $canEdit = false;
+        if ($this->container->get('security.context')->isGranted('ROLE_ADMIN') ||
+            ($this->getUser() instanceof UserInterface && $this->getUser()->equals($tutorial->getAuthor()))) {
+            $canEdit = true;
+        }
+
+        if (!$this->getUser() instanceof UserInterface || !$this->getUser()->equals($tutorial->getAuthor())) {
+            $tutorial->incrementViews();
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($tutorial);
+            $em->flush();
+        }
+
+        return $this->render('ProtonTutorialBundle:Tutorial:show.html.twig', array(
+            'tutorial' => $tutorial,
+            'canEdit' => $canEdit,
+        ));
+    }
+
+    public function newAction(Request $request)
     {
         if (!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
@@ -48,169 +61,101 @@ class TutorialController extends Controller
         $entity = new Tutorial();
         $form   = $this->createForm(new TutorialType(), $entity);
 
-        return array(
+        if ('POST' === $request->getMethod()) {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $entity->setAuthor($this->getUser());
+                $this->getUser()->incrementTutorialCount();
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->persist($this->getUser());
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('proton_tutorial_tutorials_show', array(
+                    'slug' => $entity->getSlug()
+                )));
+            }
+        }
+
+        return $this->render('ProtonTutorialBundle:Tutorial:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ));
     }
 
-    /**
-     * Creates a new Tutorial entity.
-     *
-     * @Route("/create", name="tutorial_create")
-     * @Method("post")
-     * @Template("ProtonTutorialBundle:Tutorial:new.html.twig")
-     */
-    public function createAction()
+    public function editAction(Tutorial $tutorial, Request $request)
     {
-        if (!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw new AccessDeniedException();
+        if ($tutorial->isTrashed() && !$this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new NotFoundHttpException();
         }
-
-        $entity  = new Tutorial();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new TutorialType(), $entity);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $entity->setAuthor($this->getUser());
-            $this->getUser()->incrementTutorialCount();
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->persist($this->getUser());
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('tutorial_show', array('slug' => $entity->getSlug())));
-            
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Tutorial entity.
-     *
-     * @Route("/{id}/edit", name="tutorial_edit")
-     * @Template()
-     */
-    public function editAction(Tutorial $tutorial)
-    {
-        if (!$this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
-        $editForm = $this->createForm(new TutorialType(), $tutorial);
-        $deleteForm = $this->createDeleteForm($tutorial->getId());
-
-        return array(
-            'entity'      => $tutorial,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Tutorial entity.
-     *
-     * @Route("/{id}/update", name="tutorial_update")
-     * @Method("post")
-     * @Template("ProtonTutorialBundle:Tutorial:edit.html.twig")
-     */
-    public function updateAction($id)
-    {
-        if (!$this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (!$this->canManage($tutorial)) {
             throw new AccessDeniedException();
         }
 
         $em = $this->getDoctrine()->getEntityManager();
+        $form = $this->createForm(new TutorialType(), $tutorial);
 
-        $entity = $em->getRepository('ProtonTutorialBundle:Tutorial')->find($id);
+        if ('POST' === $request->getMethod()) {
+            $form->bindRequest($request);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tutorial entity.');
+            if ($form->isValid()) {
+                $em->persist($tutorial);
+                $em->flush();
+
+                $this->container->get('session')->setFlash('notice', 'Your changes have been saved.');
+
+                return $this->redirect($this->generateUrl('proton_tutorial_tutorials_show', array(
+                    'slug' => $tutorial->getSlug(),
+                )));
+            }
         }
 
-        $editForm   = $this->createForm(new TutorialType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('tutorial_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->render('ProtonTutorialBundle:Tutorial:edit.html.twig', array(
+            'tutorial'      => $tutorial,
+            'form'        => $form->createView(),
+        ));
     }
 
-    /**
-     * Deletes a Tutorial entity.
-     *
-     * @Route("/{id}/delete", name="tutorial_delete")
-     * @Method("post")
-     */
-    public function deleteAction($id)
+    public function deleteAction(Tutorial $tutorial, Request $request)
     {
         if (!$this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('ProtonTutorialBundle:Tutorial')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Tutorial entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('tutorial'));
-    }
-
-    /**
-     * Finds and displays a Tutorial entity.
-     *
-     * @Route("/{slug}", name="tutorial_show")
-     * @Template()
-     */
-    public function showAction(Tutorial $tutorial)
-    {
-        if (!$this->getUser() instanceof UserInterface || !$this->getUser()->equals($tutorial->getAuthor())) {
-            $tutorial->incrementViews();
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($tutorial);
-            $em->flush();
-        }
-
-        return array(
-            'tutorial'      => $tutorial,
-        );
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
+        $form = $this->createFormBuilder(array('id' => $tutorial->getId()))
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->getForm();
+
+        if ('POST' === $request->getMethod()) {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $tutorial->setTrashed(true);
+                $tutorial->getAuthor()->incrementTutorialCount(-1);
+                $em->persist($tutorial);
+                $em->persist($tutorial->getAuthor());
+                $em->flush();
+
+                $this->container->get('session')->setFlash('notice', 'Tutorial trashed.');
+
+                return $this->redirect($this->generateUrl('proton_tutorial_tutorials_list'));
+            }
+        }
+
+        return $this->render('ProtonTutorialBundle:Tutorial:delete.html.twig', array(
+            'form' => $form->createView(),
+            'tutorial' => $tutorial,
+        ));
     }
+
+    private function canManage(Tutorial $tutorial)
+    {
+        $securityUser = $this->container->get('security.context')->getToken()->getUser();
+
+        return $this->container->get('security.context')->isGranted('ROLE_ADMIN')
+            || ($securityUser instanceof UserInterface && $securityUser->equals($tutorial->getAuthor()));
+    }
+
 }

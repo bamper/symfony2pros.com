@@ -9,8 +9,7 @@ proton_homepage:
     defaults: { _controller: ProtonFrontendBundle:Frontend:index }
 
 proton_tutorial:
-    resource: "@ProtonTutorialBundle/Controller/TutorialController.php"
-    type: annotation
+    resource: "@ProtonTutorialBundle/Resources/config/routing.yml"
 
 proton_question:
     resource: "@ProtonQnABundle/Resources/config/routing.yml"

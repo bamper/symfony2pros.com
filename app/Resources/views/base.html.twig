@@ -41,7 +41,7 @@
           <a class="brand" href="{{ path('proton_homepage') }}">Symfony2Pros</a>
           <ul class="nav">
             <li class="active"><a href="{{ path('proton_homepage') }}">Home</a></li>
-            <li><a href="{{ path('tutorial') }}">Tutorials</a></li>
+            <li><a href="{{ path('proton_tutorial_tutorials_list') }}">Tutorials</a></li>
             <li><a href="{{ path('proton_qna_questions_list') }}">Q&amp;A</a></li>
           </ul>
 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
@@ -73,8 +73,8 @@
           </ul>
           <h5>Tutorials</h5>
           <ul>
-            <li><a href="{{ path('tutorial') }}">Read</a></li>
-            <li><a href="{{ path('tutorial_new') }}">Write</a></li>
+            <li><a href="{{ path('proton_tutorial_tutorials_list') }}">Read</a></li>
+            <li><a href="{{ path('proton_tutorial_tutorials_new') }}">Write</a></li>
           </ul>
           <h5>Q&amp;A</h5>
           <ul>

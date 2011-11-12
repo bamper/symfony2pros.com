@@ -1,0 +1,27 @@
+proton_tutorial_tutorials_list:
+    pattern: /
+    defaults: { _controller: ProtonTutorialBundle:Tutorial:list }
+    requirements:
+        _method: GET
+
+proton_tutorial_tutorials_new:
+    pattern: /new
+    defaults: { _controller: ProtonTutorialBundle:Tutorial:new }
+
+proton_tutorial_tutorials_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: ProtonTutorialBundle:Tutorial:edit }
+    requirements:
+        id: \d+
+
+proton_tutorial_tutorials_delete:
+    pattern: /{id}/delete
+    defaults: { _controller: ProtonTutorialBundle:Tutorial:delete }
+    requirements:
+        id: \d+
+
+proton_tutorial_tutorials_show:
+    pattern: /{slug}
+    defaults: { _controller: ProtonTutorialBundle:Tutorial:show }
+    requirements:
+        _method: GET

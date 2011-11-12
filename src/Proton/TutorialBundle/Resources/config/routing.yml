@@ -1,2 +1,3 @@
 proton_tutorial_tutorial:
     resource: "@ProtonTutorialBundle/Resources/config/routing/tutorial.yml"
+    prefix: /tutorials

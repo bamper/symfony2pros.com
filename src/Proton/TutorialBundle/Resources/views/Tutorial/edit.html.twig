@@ -1,28 +1,33 @@
 {% extends "ProtonTutorialBundle::layout.html.twig" %}
 
-{% block title %}Editing "{{ entity.title }}"{% endblock %}
+{% block title %}Editing "{{ tutorial.title }}"{% endblock %}
 
 {% block content %}
-<h1>Tutorial edit</h1>
+<h1>Editing "{{ tutorial.title }}"</h1>
 
-<form action="{{ path('tutorial_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
+<form action="{{ path('proton_tutorial_tutorials_edit', {"id": tutorial.id}) }}" method="post" {{ form_enctype(form) }}>
+    <div class="clearfix">
+        {{ form_label(form.title) }}
+        <div class="input">
+            {{ form_errors(form.title) }}
+            {{ form_widget(form.title, { 'attr': {'class': 'span10'}}) }}
+        </div>
+    </div>
+    <div class="clearfix">
+        {{ form_label(form.description) }}
+        <div class="input">
+            {{ form_errors(form.description) }}
+            {{ form_widget(form.description, { 'attr': {'class': 'span10'}}) }}
+        </div>
+    </div>
+    <div class="clearfix">
+        {{ form_label(form.content) }}
+        <div class="input">
+            {{ form_errors(form.content) }}
+            {{ form_widget(form.content, { 'attr': {'class': 'span10'}}) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    <input class="btn primary" type="submit" />
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('tutorial') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('tutorial_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
 {% endblock %}

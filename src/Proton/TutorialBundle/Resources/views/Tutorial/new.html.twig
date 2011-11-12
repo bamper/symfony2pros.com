@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Write a tutorial</h1>
 
-<form action="{{ path('tutorial_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('proton_tutorial_tutorials_new') }}" method="post" {{ form_enctype(form) }}>
     <div class="clearfix">
         {{ form_label(form.title) }}
         <div class="input">

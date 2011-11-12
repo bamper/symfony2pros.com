@@ -8,7 +8,7 @@
 <h1>Tutorials</h1>
 {% for tutorial in tutorials %}
 <div>
-    <h2><a href="{{ path('tutorial_show', {"slug": tutorial.slug}) }}">{{ tutorial.title }}</a></h2>
+    <h2><a href="{{ path('proton_tutorial_tutorials_show', {"slug": tutorial.slug}) }}">{{ tutorial.title }}</a></h2>
     <p>{{ time_formatter(tutorial.createdat, 'posted by ' ~ tutorial.author.username) }}</p>
     <p>{{ tutorial.description }}</p>
 </div>
