@@ -14,7 +14,7 @@ class TutorialType extends AbstractType
         if (true === $options['show_status']) {
             $builder->add('status', 'choice', array(
                 'choices' => array(
-                    'publish'   => 'Publish',
+                    'published'   => 'Publish',
                     'draft'     => 'Draft',
                 ),
             ));

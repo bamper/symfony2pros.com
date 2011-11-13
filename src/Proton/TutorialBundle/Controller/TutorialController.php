@@ -99,7 +99,7 @@ class TutorialController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
         $form = $this->createForm(new TutorialType(), $tutorial, array(
-            'show_status' => $tutorial->getStatus() !== 'publish',
+            'show_status' => $tutorial->getStatus() !== 'published',
         ));
 
         if ('POST' === $request->getMethod()) {

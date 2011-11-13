@@ -34,7 +34,7 @@ class TutorialManager extends BaseTutorialManager
     {
         $tutorials = $this->repo->findBy(array(
             'trashed' => false,
-            'status' => 'publish',
+            'status' => 'published',
         ), array(
             'created_at' => 'DESC',
         ), $limit);
