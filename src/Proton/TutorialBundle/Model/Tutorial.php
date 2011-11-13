@@ -17,6 +17,7 @@ abstract class Tutorial implements TutorialInterface
     protected $content;
     protected $trashed = false;
     protected $views = 0;
+    protected $status;
 
     public function getId()
     {
@@ -108,6 +109,16 @@ abstract class Tutorial implements TutorialInterface
         $this->views += (int)$by;
 
         return $this->views;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
 }

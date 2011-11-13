@@ -4,3 +4,12 @@ services:
         arguments:
             em: "@doctrine.orm.entity_manager"
             class: Proton\TutorialBundle\Entity\Tutorial
+    proton_tutorial.blamer.tutorial.security:
+        class: Proton\TutorialBundle\Blamer\SecurityTutorialBlamer
+        arguments:
+            securityContext: "@security.context"
+    proton_tutorial.creator.tutorial:
+        class: Proton\TutorialBundle\Creator\TutorialCreator
+        arguments:
+            tutorialManager: "@proton_tutorial.manager.tutorial"
+            blamer: "@proton_tutorial.blamer.tutorial.security"

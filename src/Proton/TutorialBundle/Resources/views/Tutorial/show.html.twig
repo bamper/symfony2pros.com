@@ -16,7 +16,12 @@
 
 {% block content %}
 <div id="tutorial-meta" class="well">
-    <h1>{{ tutorial.title }}</h1>
+    <h1>
+        {{ tutorial.title }}
+{% if tutorial.status == "draft" %}
+        (draft)
+{% endif %}
+    </h1>
     {{ placard(tutorial.author) }}
     <p>{{ time_formatter(tutorial.createdat) }}</p>
     <p><strong>Description:</strong> {{ tutorial.description }}</p>

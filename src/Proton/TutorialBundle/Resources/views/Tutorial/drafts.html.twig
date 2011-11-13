@@ -1,0 +1,20 @@
+{% extends "ProtonTutorialBundle::layout.html.twig" %}
+
+{% block title %}Tutorial Drafts{% endblock %}
+
+{% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
+
+{% block content %}
+<h1>Tutorial Drafts</h1>
+
+<ul class="unstyled">
+{% for draft in drafts %}
+    <li>
+        <div>
+            <a href="{{ path('proton_tutorial_tutorials_edit', {"id": draft.id}) }}">{{ draft.title }}</a>
+            {{ time_formatter(draft.updatedat, 'last updated') }}
+        </div>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

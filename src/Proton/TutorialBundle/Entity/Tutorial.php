@@ -66,4 +66,9 @@ class Tutorial extends BaseTutorial
      */
     protected $views = 1;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $status;
+
 }

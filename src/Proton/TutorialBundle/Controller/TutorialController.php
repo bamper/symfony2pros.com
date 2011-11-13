@@ -8,6 +8,8 @@ use Proton\TutorialBundle\Form\TutorialType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TutorialController extends Controller
 {
@@ -16,14 +18,23 @@ class TutorialController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $tutorials = $em->getRepository('ProtonTutorialBundle:Tutorial')->findBy(array(
-            'trashed' => false,
-        ), array(
-            'created_at' => 'DESC',
-        ));
+        $tutorials = $this->container->get('proton_tutorial.manager.tutorial')->getTutorialList();
 
         return $this->render('ProtonTutorialBundle:Tutorial:list.html.twig', array(
             'tutorials' => $tutorials,
+        ));
+    }
+
+    public function draftsAction()
+    {
+        if (!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
+        }
+
+        $drafts = $this->container->get('proton_tutorial.manager.tutorial')->findDraftsByAuthor($this->getUser());
+
+        return $this->render('ProtonTutorialBundle:Tutorial:drafts.html.twig', array(
+            'drafts' => $drafts,
         ));
     }
 
@@ -58,28 +69,21 @@ class TutorialController extends Controller
             throw new AccessDeniedException();
         }
 
-        $entity = new Tutorial();
-        $form   = $this->createForm(new TutorialType(), $entity);
+        $tutorial = new Tutorial();
+        $form   = $this->createForm(new TutorialType(), $tutorial);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
 
-            if ($form->isValid()) {
-                $entity->setAuthor($this->getUser());
-                $this->getUser()->incrementTutorialCount();
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($entity);
-                $em->persist($this->getUser());
-                $em->flush();
-
+            if ($form->isValid() && $this->container->get('proton_tutorial.creator.tutorial')->create($tutorial)) {
                 return $this->redirect($this->generateUrl('proton_tutorial_tutorials_show', array(
-                    'slug' => $entity->getSlug()
+                    'slug' => $tutorial->getSlug()
                 )));
             }
         }
 
         return $this->render('ProtonTutorialBundle:Tutorial:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $tutorial,
             'form'   => $form->createView()
         ));
     }
@@ -94,7 +98,9 @@ class TutorialController extends Controller
         }
 
         $em = $this->getDoctrine()->getEntityManager();
-        $form = $this->createForm(new TutorialType(), $tutorial);
+        $form = $this->createForm(new TutorialType(), $tutorial, array(
+            'show_status' => $tutorial->getStatus() !== 'publish',
+        ));
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);

@@ -17,11 +17,7 @@ class FrontendController extends Controller
         ), array(
             'created_at' => 'DESC',
         ), 4);
-        $tutorials = $em->getRepository('ProtonTutorialBundle:Tutorial')->findBy(array(
-            'trashed' => false,
-        ), array(
-            'created_at' => 'DESC',
-        ), 4);
+        $tutorials = $this->container->get('proton_tutorial.manager.tutorial')->getTutorialList(4);
 
         return $this->render('ProtonFrontendBundle:Frontend:index.html.twig', array(
             'questions' => $questions,
