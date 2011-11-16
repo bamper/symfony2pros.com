@@ -1,3 +1,7 @@
-proton_tutorial_tutorial:
+proton_tutorial_drafts:
+    resource: "@ProtonTutorialBundle/Resources/config/routing/draft.yml"
+    prefix: /tutorials/drafts
+
+proton_tutorial_tutorials:
     resource: "@ProtonTutorialBundle/Resources/config/routing/tutorial.yml"
     prefix: /tutorials

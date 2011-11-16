@@ -1,0 +1,32 @@
+{% extends "ProtonTutorialBundle::layout.html.twig" %}
+
+{% block title %}Draft - {{ draft.title }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/comments.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/comments.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery/jquery.form.js') }}"></script>
+{% endblock %}
+
+{% from "ProtonUserBundle::macros.html.twig" import placard %}
+{% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
+
+{% block content %}
+<div id="tutorial-meta" class="well">
+    <h1>
+        {{ draft.title }} (draft)
+    </h1>
+    {{ placard(draft.author) }}
+    <p>{{ time_formatter(draft.updatedat, 'Last updated') }}</p>
+    <p><strong>Description:</strong> {{ draft.description }}</p>
+    <p>
+        <a class="btn primary" href="{{ path('proton_tutorial_drafts_publish', {"id": draft.id}) }}">Publish</a>
+        <a class="btn" href="{{ path('proton_tutorial_drafts_edit', {'id': draft.id}) }}">Edit</a>
+        <a class="btn danger" href="{{ path('proton_tutorial_drafts_delete', {'id': draft.id}) }}">Trash</a>
+    </p>
+</div>
+<p>{{ draft.content|markdown }}</p>
+{% endblock %}

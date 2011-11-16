@@ -20,10 +20,6 @@ proton_tutorial_tutorials_delete:
     requirements:
         id: \d+
 
-proton_tutorial_tutorials_drafts:
-    pattern: /drafts
-    defaults: { _controller: ProtonTutorialBundle:Tutorial:drafts }
-
 proton_tutorial_tutorials_show:
     pattern: /{slug}
     defaults: { _controller: ProtonTutorialBundle:Tutorial:show }

@@ -4,7 +4,7 @@ namespace Proton\TutorialBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-abstract class Tutorial implements TutorialInterface
+abstract class Draft implements DraftInterface
 {
 
     protected $id;
@@ -12,11 +12,8 @@ abstract class Tutorial implements TutorialInterface
     protected $updated_at;
     protected $author;
     protected $title;
-    protected $slug;
     protected $description;
     protected $content;
-    protected $trashed = false;
-    protected $views = 1;
 
     public function getId()
     {
@@ -53,16 +50,6 @@ abstract class Tutorial implements TutorialInterface
         return $this->title;
     }
 
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-    }
-
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
     public function setDescription($description)
     {
         $this->description = $description;
@@ -81,33 +68,6 @@ abstract class Tutorial implements TutorialInterface
     public function getContent()
     {
         return $this->content;
-    }
-
-    public function setTrashed($trashed)
-    {
-        $this->trashed = $trashed;
-    }
-
-    public function isTrashed()
-    {
-        return $this->trashed;
-    }
-
-    public function setViews($views)
-    {
-        $this->views = $views;
-    }
-
-    public function getViews()
-    {
-        return $this->views;
-    }
-
-    public function incrementViews($by = 1)
-    {
-        $this->views += (int)$by;
-
-        return $this->views;
     }
 
 }

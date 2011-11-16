@@ -71,11 +71,17 @@
             <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
 {% endif %}
           </ul>
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+          <h5>Tutorial Drafts</h5>
+          <ul>
+              <li><a href="{{ path('proton_tutorial_drafts_list') }}">Your Drafts</a></li>
+              <li><a href="{{ path('proton_tutorial_drafts_new') }}">Compose</a></li>
+          </ul>
+{% endif %}
           <h5>Tutorials</h5>
           <ul>
             <li><a href="{{ path('proton_tutorial_tutorials_list') }}">Read</a></li>
             <li><a href="{{ path('proton_tutorial_tutorials_new') }}">Write</a></li>
-            <li><a href="{{ path('proton_tutorial_tutorials_drafts') }}">Your Drafts</a></li>
           </ul>
           <h5>Q&amp;A</h5>
           <ul>

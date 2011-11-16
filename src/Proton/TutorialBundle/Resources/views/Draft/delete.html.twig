@@ -4,11 +4,11 @@
 
 {% block content %}
 <h1>Deleting Stuff</h1>
-<p>Are you <strong>sure</strong> you want to delete the tutorial "{{ tutorial.title }}" (id#{{ tutorial.id }})? There's (almost) no going back.</p>
+<p>Are you <strong>sure</strong> you want to delete the tutorial "{{ draft.title }}" (id#{{ draft.id }})? There's (almost) no going back.</p>
 
 <form method="post">
     {{ form_widget(form) }}
     <input class="btn danger" type="submit" value="Do it." />
-    <a class="btn primary" href="{{ path('proton_tutorial_tutorials_show', {"slug": tutorial.slug}) }}">Nevermind</a>
+    <a class="btn primary" href="{{ path('proton_tutorial_drafts_show', {"id": draft.id}) }}">Nevermind</a>
 </form>
 {% endblock %}

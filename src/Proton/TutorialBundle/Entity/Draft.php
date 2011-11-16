@@ -3,13 +3,13 @@
 namespace Proton\TutorialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Proton\TutorialBundle\Model\Tutorial as BaseTutorial;
+use Proton\TutorialBundle\Model\Draft as BaseDraft;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
  */
-class Tutorial extends BaseTutorial
+class Draft extends BaseDraft
 {
 
     /**
@@ -41,12 +41,6 @@ class Tutorial extends BaseTutorial
     protected $title;
 
     /**
-     * @Gedmo\Slug(fields={"id","title"})
-     * @ORM\Column(type="string", unique=true)
-     */
-    protected $slug;
-
-    /**
      * @ORM\Column(type="string")
      */
     protected $description;
@@ -55,15 +49,5 @@ class Tutorial extends BaseTutorial
      * @ORM\Column(type="text")
      */
     protected $content;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $trashed = false;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $views = 1;
 
 }

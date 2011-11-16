@@ -97,17 +97,13 @@ class TutorialController extends Controller
             throw new AccessDeniedException();
         }
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $form = $this->createForm(new TutorialType(), $tutorial, array(
-            'show_status' => $tutorial->getStatus() !== 'published',
-        ));
+        $form = $this->createForm(new TutorialType(), $tutorial);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $em->persist($tutorial);
-                $em->flush();
+                $this->container->get('proton_tutorial.manager.tutorial')->saveTutorial($tutorial);
 
                 $this->container->get('session')->setFlash('notice', 'Your changes have been saved.');
 
@@ -137,13 +133,7 @@ class TutorialController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
-                $tutorial->setTrashed(true);
-                $tutorial->getAuthor()->incrementTutorialCount(-1);
-                $em->persist($tutorial);
-                $em->persist($tutorial->getAuthor());
-                $em->flush();
-
+                $this->container->get('proton_tutorial.manager.tutorial')->removeTutorial($tutorial);
                 $this->container->get('session')->setFlash('notice', 'Tutorial trashed.');
 
                 return $this->redirect($this->generateUrl('proton_tutorial_tutorials_list'));
@@ -159,6 +149,10 @@ class TutorialController extends Controller
     private function canManage(Tutorial $tutorial)
     {
         $securityUser = $this->container->get('security.context')->getToken()->getUser();
+
+        if (!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return false;
+        }
 
         return $this->container->get('security.context')->isGranted('ROLE_ADMIN')
             || ($securityUser instanceof UserInterface && $securityUser->equals($tutorial->getAuthor()));

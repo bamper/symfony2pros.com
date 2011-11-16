@@ -1,0 +1,29 @@
+proton_tutorial_drafts_list:
+    pattern: /
+    defaults: { _controller: ProtonTutorialBundle:Draft:list }
+
+proton_tutorial_drafts_show:
+    pattern: /{id}
+    defaults: { _controller: ProtonTutorialBundle:Draft:show }
+    requirements:
+        id: \d+
+
+proton_tutorial_drafts_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: ProtonTutorialBundle:Draft:edit }
+    requirements:
+        id: \d+
+
+proton_tutorial_drafts_delete:
+    pattern: /{id}/delete
+    defaults: { _controller: ProtonTutorialBundle:Draft:delete }
+    requirements:
+        id: \d+
+
+proton_tutorial_drafts_new:
+    pattern: /new
+    defaults: { _controller: ProtonTutorialBundle:Draft:new }
+
+proton_tutorial_drafts_publish:
+    pattern: /{id}/publish
+    defaults: { _controller: ProtonTutorialBundle:Draft:publish }

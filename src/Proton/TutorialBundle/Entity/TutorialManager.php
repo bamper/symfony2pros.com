@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Proton\TutorialBundle\Model\TutorialInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Proton\TutorialBundle\Model\DraftInterface;
 
 class TutorialManager extends BaseTutorialManager
 {
@@ -34,7 +35,6 @@ class TutorialManager extends BaseTutorialManager
     {
         $tutorials = $this->repo->findBy(array(
             'trashed' => false,
-            'status' => 'published',
         ), array(
             'created_at' => 'DESC',
         ), $limit);
@@ -46,7 +46,6 @@ class TutorialManager extends BaseTutorialManager
     {
         $tutorials = $this->repo->findBy(array(
             'author' => $user,
-            'status' => 'draft',
             'trashed' => false,
         ), array(
             'created_at' => 'DESC',
@@ -57,9 +56,25 @@ class TutorialManager extends BaseTutorialManager
 
     public function addTutorial(TutorialInterface $tutorial)
     {
-        $tutorial->getAuthor()->incrementTutorialCount();
+        if ('published' === $tutorial->getStatus()) {
+            $tutorial->getAuthor()->incrementTutorialCount();
+            $this->em->persist($tutorial->getAuthor());
+        }
         $this->em->persist($tutorial);
-        $this->em->persist($tutorial->getAuthor());
+        $this->em->flush();
+    }
+
+    public function saveTutorial(TutorialInterface $tutorial)
+    {
+        $this->em->persist($tutorial);
+        $this->em->flush();
+    }
+
+    public function removeTutorial(TutorialInterface $tutorial)
+    {
+        $tutorial->setTrashed(true);
+        $tutorial->getAuthor->incrementTutorialCount(-1);
+        $this->em->persist($tutorial);
         $this->em->flush();
     }
 
@@ -69,6 +84,21 @@ class TutorialManager extends BaseTutorialManager
         $thread = $threadRepo->findOneBy(array('id' => $tutorial->getSlug()));
 
         return $thread->getNumComments();
+    }
+
+    public function publishDraft(DraftInterface $draft)
+    {
+        $tutorial = $this->createTutorial();
+        $tutorial->setAuthor($draft->getAuthor());
+        $tutorial->setTitle($draft->getTitle());
+        $tutorial->setDescription($draft->getDescription());
+        $tutorial->setContent($draft->getContent());
+
+        $this->em->persist($tutorial);
+        $this->em->remove($draft);
+        $this->em->flush();
+
+        return $tutorial;
     }
 
     public function getClass()
