@@ -11,7 +11,6 @@
     <script type="text/javascript" src="{{ asset('js/jquery/jquery.form.js') }}"></script>
 {% endblock %}
 
-{% from "ProtonUserBundle::macros.html.twig" import placard %}
 {% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
 
 {% block content %}
@@ -19,7 +18,7 @@
     <h1>
         {{ draft.title }} (draft)
     </h1>
-    {{ placard(draft.author) }}
+    {% render 'ProtonUserBundle:User:placard' with {"user": tutorial.author} %}
     <p>{{ time_formatter(draft.updatedat, 'Last updated') }}</p>
     <p><strong>Description:</strong> {{ draft.description }}</p>
     <p>

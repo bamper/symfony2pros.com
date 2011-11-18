@@ -54,12 +54,13 @@ class AnswerController extends Controller
             if ($form->isValid()) {
                 $answer->setQuestion($question);
                 $answer->setAuthor($this->getUser());
-                $this->getUser()->incrementAnswerCount();
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($answer);
-                $em->persist($this->getUser());
                 $em->flush();
+
+                $redis = $this->container->get('snc_redis.default_client');
+                $redis->hincrby(sprintf('user:%d', $answer->getAuthor()->getId()), 'answer_count', 1);
 
                 return $this->redirect($this->generateUrl('proton_qna_questions_show', array(
                     'slug' => $question->getSlug(),
@@ -121,12 +122,14 @@ class AnswerController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
                 $answer->setTrashed(true);
-                $answer->getAuthor()->incrementAnswerCount(-1);
+
+                $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($answer);
-                $em->persist($answer->getAuthor());
                 $em->flush();
+
+                $redis = $this->container->get('snc_redis.default_client');
+                $redis->hincrby(sprintf('user:%d', $answer->getAuthor()->getId()), 'answer_count', -1);
 
                 $this->container->get('session')->setFlash('notice', 'Answer trashed.');
 

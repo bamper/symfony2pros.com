@@ -11,13 +11,12 @@
     <script type="text/javascript" src="{{ asset('js/jquery/jquery.form.js') }}"></script>
 {% endblock %}
 
-{% from "ProtonUserBundle::macros.html.twig" import placard %}
 {% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
 
 {% block content %}
 <div id="tutorial-meta" class="well">
     <h1>{{ tutorial.title }}</h1>
-    {{ placard(tutorial.author) }}
+    {% render 'ProtonUserBundle:User:placard' with {"user": tutorial.author} %}
     <p>{{ time_formatter(tutorial.createdat) }}</p>
     <p><strong>Description:</strong> {{ tutorial.description }}</p>
     {% set views = tutorial.views %}

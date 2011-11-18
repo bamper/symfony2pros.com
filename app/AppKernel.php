@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

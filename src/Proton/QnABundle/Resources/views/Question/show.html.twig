@@ -2,13 +2,12 @@
 
 {% block title %}Question - {{ question.title }}{% endblock %}
 
-{% from "ProtonUserBundle::macros.html.twig" import placard %}
 {% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
 
 {% block content %}
 <div id="question-meta" class="well">
     <h1>{{ question.title }}</h1>
-    {{ placard(question.author) }}
+    {% render 'ProtonUserBundle:User:placard' with {"user": question.author} %}
     <p>{{ time_formatter(question.createdat, 'Asked') }}</p>
 {% set views = question.views %}
     <p>{% transchoice views %}
@@ -34,7 +33,7 @@
 {% endtranschoice %}</h1>
 {% for answer in question.answers %}
     <div id="answer-{{ answer.id }}" class="answer answer-{{ answer.id }}">
-        {{ placard(answer.author) }}
+        {% render 'ProtonUserBundle:User:placard' with {"user": answer.author} %}
         <p>{{ time_formatter(answer.createdat, 'Answered') }}</p>
         {{ answer.content|markdown }}
     </div>

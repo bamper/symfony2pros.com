@@ -61,7 +61,7 @@ class QuestionController extends Controller
         return $this->render('ProtonQnABundle:Question:show.html.twig', array(
             'question' => $question,
             'canAnswer' => $canAnswer,
-            'answer' => $answer,
+            'myAnswer' => $answer,
             'canEdit' => $canEdit,
         ));
     }
@@ -80,11 +80,12 @@ class QuestionController extends Controller
 
             if ($form->isValid()) {
                 $question->setAuthor($this->getUser());
-                $this->getUser()->incrementQuestionCount();
+
+                $redis = $this->container->get('snc_redis.default_client');
+                $redis->hincrby(sprintf('user:%d', $question->getAuthor()->getId()), 'question_count', 1);
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($question);
-                $em->persist($this->getUser());
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('proton_qna_questions_show', array(
@@ -146,12 +147,14 @@ class QuestionController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
                 $question->setTrashed(true);
-                $question->getAuthor()->incrementQuestionCount(-1);
+
+                $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($question);
-                $em->persist($question->getAuthor());
                 $em->flush();
+
+                $redis = $this->container->get('snc_redis.default_client');
+                $redis->hincrby(sprintf('user:%d', $question->getAuthor()->getId()), 'question_count', -1);
 
                 $this->container->get('session')->setFlash('notice', 'Question trashed.');
 

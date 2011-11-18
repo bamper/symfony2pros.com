@@ -25,6 +25,8 @@ $loader->registerNamespaces(array(
     'Knp'              => __DIR__.'/../vendor/bundles',
     'Exercise'         => __DIR__.'/../vendor/bundles',
     'Ornicar'          => __DIR__.'/../vendor/bundles',
+    'Snc'              => __DIR__.'/../vendor/bundles',
+    'Predis'           => __DIR__.'/../vendor/predis/lib',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

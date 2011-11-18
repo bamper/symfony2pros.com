@@ -3,6 +3,7 @@ services:
         class: Proton\TutorialBundle\Entity\TutorialManager
         arguments:
             em: "@doctrine.orm.entity_manager"
+            redis: "@snc_redis.default_client"
             class: Proton\TutorialBundle\Entity\Tutorial
     proton_tutorial.blamer.tutorial.security:
         class: Proton\TutorialBundle\Blamer\SecurityTutorialBlamer

@@ -122,9 +122,9 @@ class DraftController extends Controller
             }
         }
 
-        return $this->render('ProtonTutorialBundle:Tutorial:delete.html.twig', array(
+        return $this->render('ProtonTutorialBundle:Draft:delete.html.twig', array(
             'form' => $form->createView(),
-            'tutorial' => $tutorial,
+            'draft' => $draft,
         ));
     }
 

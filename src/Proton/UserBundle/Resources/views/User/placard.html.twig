@@ -1,0 +1,17 @@
+<div class="user-placard" id="placard-{{ user.id }}">
+    <div class="row">
+        <div class="span1">
+            <img src="{{ gravatar(user.email) }}" />
+        </div>
+        <div class="span5">
+            <div class="row">
+                {{ user.username }}
+            </div>
+            <div class="row">
+                Stats: <a href="#" data-placement="below" rel="twipsy" title="Tutorials Written">{{ userMetadata.tutorial_count|default('0') }}</a>
+                | <a href="#" data-placement="below" rel="twipsy" title="Questions Asked">{{ userMetadata.question_count|default('0') }}</a>
+                | <a href="#" data-placement="below" rel="twipsy" title="Questions Answered">{{ userMetadata.answer_count|default('0') }}</a>
+            </div>
+        </div>
+    </div>
+</div>

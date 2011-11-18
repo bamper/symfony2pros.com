@@ -93,3 +93,10 @@
 [KnpTimeBundle]
     git=git://github.com/knplabs/KnpTimeBundle.git
     target=bundles/Knp/Bundle/TimeBundle
+
+[SncRedisBundle]
+    git=git://github.com/snc/SncRedisBundle.git
+    target=/bundles/Snc/RedisBundle
+
+[predis]
+    git=git://github.com/nrk/predis.git

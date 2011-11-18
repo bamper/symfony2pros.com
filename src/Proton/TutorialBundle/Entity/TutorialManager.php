@@ -13,12 +13,14 @@ class TutorialManager extends BaseTutorialManager
 {
 
     protected $em;
+    protected $redis;
     protected $repo;
     protected $class;
 
-    public function __construct(EntityManager $em, $class)
+    public function __construct(EntityManager $em, \Predis\Client $redis, $class)
     {
         $this->em = $em;
+        $this->redis = $redis;
         $this->repo = $em->getRepository($class);
         $this->class = $class;
     }
@@ -42,24 +44,9 @@ class TutorialManager extends BaseTutorialManager
         return $tutorials;
     }
 
-    public function findDraftsByAuthor(UserInterface $user)
-    {
-        $tutorials = $this->repo->findBy(array(
-            'author' => $user,
-            'trashed' => false,
-        ), array(
-            'created_at' => 'DESC',
-        ));
-
-        return $tutorials;
-    }
-
     public function addTutorial(TutorialInterface $tutorial)
     {
-        if ('published' === $tutorial->getStatus()) {
-            $tutorial->getAuthor()->incrementTutorialCount();
-            $this->em->persist($tutorial->getAuthor());
-        }
+        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', 1);
         $this->em->persist($tutorial);
         $this->em->flush();
     }
@@ -73,7 +60,7 @@ class TutorialManager extends BaseTutorialManager
     public function removeTutorial(TutorialInterface $tutorial)
     {
         $tutorial->setTrashed(true);
-        $tutorial->getAuthor->incrementTutorialCount(-1);
+        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', -1);
         $this->em->persist($tutorial);
         $this->em->flush();
     }
@@ -93,10 +80,8 @@ class TutorialManager extends BaseTutorialManager
         $tutorial->setTitle($draft->getTitle());
         $tutorial->setDescription($draft->getDescription());
         $tutorial->setContent($draft->getContent());
-
-        $this->em->persist($tutorial);
         $this->em->remove($draft);
-        $this->em->flush();
+        $this->addTutorial($tutorial);
 
         return $tutorial;
     }

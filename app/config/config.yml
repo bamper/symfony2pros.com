@@ -110,3 +110,15 @@ ornicar_gravatar:
     size: 32
 
 knp_time: ~
+
+snc_redis:
+    connections:
+        default:
+            alias: default
+            host: localhost
+            port: 6379
+            database: 0
+    clients:
+        default:
+            alias: default
+            connection: default
