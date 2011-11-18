@@ -11,11 +11,27 @@
   </p>
 {% else %}
   <p>
-      <a class="btn primary large" href="{{ path('proton_qna_questions_new') }}">Ask a question &raquo;</a>
       <a class="btn primary large" href="{{ path('proton_tutorial_tutorials_new') }}">Write a tutorial &raquo;</a>
+      <a class="btn primary large" href="{{ path('proton_qna_questions_new') }}">Ask a question &raquo;</a>
   </p>
 {% endif %}
 </div>
+
+<div class="row">
+    <div class="span16">
+        <h1>Recent Tutorials <small>(<a href="{{ path('proton_tutorial_tutorials_list') }}">view more</a>)</small></h1>
+    </div>
+</div>
+<div class="row">
+{% for tutorial in tutorials %}
+    <div class="span8">
+        <h2><a href="{{ path('proton_tutorial_tutorials_show', {"slug":tutorial.slug}) }}">{{ tutorial.title }}</a> <small>by {{ tutorial.author.username }}</small></h2>
+        <p>{{ tutorial.description|truncate(50) }}</p>
+    </div>
+{% endfor %}
+</div>
+
+<hr />
 
 <div class="row">
     <div class="span16">
@@ -34,19 +50,4 @@
 {% endfor %}
 </div>
 
-<hr />
-
-<div class="row">
-    <div class="span16">
-        <h1>Recent Tutorials <small>(<a href="{{ path('proton_tutorial_tutorials_list') }}">view more</a>)</small></h1>
-    </div>
-</div>
-<div class="row">
-{% for tutorial in tutorials %}
-    <div class="span8">
-        <h2><a href="{{ path('proton_tutorial_tutorials_show', {"slug":tutorial.slug}) }}">{{ tutorial.title }}</a> <small>by {{ tutorial.author.username }}</small></h2>
-        <p>{{ tutorial.description|truncate(50) }}</p>
-    </div>
-{% endfor %}
-</div>
 {% endblock content %}
