@@ -51,7 +51,7 @@ class TutorialManager extends BaseTutorialManager
         $this->em->flush();
     }
 
-    public function saveTutorial(TutorialInterface $tutorial)
+    public function updateTutorial(TutorialInterface $tutorial)
     {
         $this->em->persist($tutorial);
         $this->em->flush();

@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Proton\TutorialBundle\Model\TutorialManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class TutorialController extends Controller
 {
@@ -103,7 +105,7 @@ class TutorialController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $this->container->get('proton_tutorial.manager.tutorial')->saveTutorial($tutorial);
+                $this->container->get('proton_tutorial.manager.tutorial')->updateTutorial($tutorial);
 
                 $this->container->get('session')->setFlash('notice', 'Your changes have been saved.');
 
@@ -144,6 +146,25 @@ class TutorialController extends Controller
             'form' => $form->createView(),
             'tutorial' => $tutorial,
         ));
+    }
+
+    public function feedAction()
+    {
+        $tutorials = $this->getTutorialManager()->getTutorialList();
+
+        $response = new Response('', 200, array('Content-Type' => 'application/rss+xml'));
+
+        return $this->render('ProtonTutorialBundle:Tutorial:feed.xml.twig', array(
+            'tutorials' => $tutorials,
+        ), $response);
+    }
+
+    /**
+     * @return TutorialManagerInterface
+     */
+    protected function getTutorialManager()
+    {
+        return $this->container->get('proton_tutorial.manager.tutorial');
     }
 
     private function canManage(Tutorial $tutorial)

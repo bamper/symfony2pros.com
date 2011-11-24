@@ -20,6 +20,10 @@ proton_tutorial_tutorials_delete:
     requirements:
         id: \d+
 
+proton_tutorial_tutorials_feed:
+    pattern: /feed
+    defaults: { _controller: ProtonTutorialBundle:Tutorial:feed }
+
 proton_tutorial_tutorials_show:
     pattern: /{slug}
     defaults: { _controller: ProtonTutorialBundle:Tutorial:show }

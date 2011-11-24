@@ -12,4 +12,18 @@ interface TutorialManagerInterface
      */
     function createTutorial();
 
+    /**
+     * @return TutorialInterface
+     */
+    function find($id);
+
+    function getTutorialList($limit = null);
+
+    function addTutorial(TutorialInterface $tutorial);
+
+    function updateTutorial(TutorialInterface $tutorial);
+
+    function removeTutorial(TutorialInterface $tutorial);
+
+
 }

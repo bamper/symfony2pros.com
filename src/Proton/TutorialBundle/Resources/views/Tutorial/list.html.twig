@@ -5,7 +5,7 @@
 {% from "ProtonCoreBundle::macros.html.twig" import time_formatter %}
 
 {% block content %}
-<h1>Tutorials</h1>
+<h1>Tutorials <small>(<a href="{{ path('proton_tutorial_tutorials_feed') }}">rss feed</a>)</small></h1>
 {% for tutorial in tutorials %}
 <div>
     <h2><a href="{{ path('proton_tutorial_tutorials_show', {"slug": tutorial.slug}) }}">{{ tutorial.title }}</a></h2>
