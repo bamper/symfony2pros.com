@@ -46,9 +46,9 @@ class TutorialManager extends BaseTutorialManager
 
     public function addTutorial(TutorialInterface $tutorial)
     {
-        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', 1);
         $this->em->persist($tutorial);
         $this->em->flush();
+        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', 1);
     }
 
     public function updateTutorial(TutorialInterface $tutorial)
@@ -60,9 +60,9 @@ class TutorialManager extends BaseTutorialManager
     public function removeTutorial(TutorialInterface $tutorial)
     {
         $tutorial->setTrashed(true);
-        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', -1);
         $this->em->persist($tutorial);
         $this->em->flush();
+        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', -1);
     }
 
     public function getCommentCount(TutorialInterface $tutorial)
