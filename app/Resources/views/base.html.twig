@@ -50,6 +50,7 @@
           <form class="pull-right" action="{{ path('fos_user_security_check') }}" method="post">
             <input class="span4" placeholder="username" type="text" id="username" name="_username" value="" />
             <input class="span4" placeholder="password" type="password" id="password" name="_password" />
+            <input type="hidden" name="_target_path" value="{{ app.request.pathinfo }}" />
             <input type="submit" id="_submit" name="_submit" value="Login" />
           </form>
 {% endif %}
