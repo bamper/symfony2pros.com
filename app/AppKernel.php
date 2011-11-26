@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Proton\QnABundle\ProtonQnABundle(),
             new Proton\CommentBundle\ProtonCommentBundle(),
             new Proton\CoreBundle\ProtonCoreBundle(),
+            new Proton\TagBundle\ProtonTagBundle(),
 
             // 3rd-party bundles
             new FOS\UserBundle\FOSUserBundle(),
@@ -35,6 +36,7 @@ class AppKernel extends Kernel
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
+            new FPN\TagBundle\FPNTagBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,0 +1,5 @@
+services:
+    proton_tag.form.transformer.tag:
+        class: Proton\TagBundle\Form\DataTransformer\TagTransformer
+        arguments:
+            tagManager: "@fpn_tag.tag_manager"

@@ -72,7 +72,7 @@ class TutorialController extends Controller
         }
 
         $tutorial = new Tutorial();
-        $form   = $this->createForm(new TutorialType(), $tutorial);
+        $form   = $this->createForm('proton_tutorial_tutorial', $tutorial);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
@@ -99,7 +99,7 @@ class TutorialController extends Controller
             throw new AccessDeniedException();
         }
 
-        $form = $this->createForm(new TutorialType(), $tutorial);
+        $form = $this->createForm('proton_tutorial_tutorial', $tutorial);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);

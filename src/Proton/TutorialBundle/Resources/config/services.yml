@@ -14,3 +14,9 @@ services:
         arguments:
             tutorialManager: "@proton_tutorial.manager.tutorial"
             blamer: "@proton_tutorial.blamer.tutorial.security"
+    proton_tutorial.form_type.tutorial:
+        class: Proton\TutorialBundle\Form\TutorialType
+        arguments:
+            tagTransformer: "@proton_tag.form.transformer.tag"
+        tags:
+            - { name: form.type, alias: proton_tutorial_tutorial }

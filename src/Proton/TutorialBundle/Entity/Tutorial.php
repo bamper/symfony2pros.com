@@ -5,11 +5,12 @@ namespace Proton\TutorialBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Proton\TutorialBundle\Model\Tutorial as BaseTutorial;
 use Gedmo\Mapping\Annotation as Gedmo;
+use DoctrineExtensions\Taggable\Taggable;
 
 /**
  * @ORM\Entity
  */
-class Tutorial extends BaseTutorial
+class Tutorial extends BaseTutorial implements Taggable
 {
 
     /**
@@ -65,5 +66,26 @@ class Tutorial extends BaseTutorial
      * @ORM\Column(type="integer")
      */
     protected $views = 1;
+
+    protected $tags;
+
+    public $tag_string;
+
+    public function getTaggableId()
+    {
+        return $this->id;
+    }
+
+    public function getTaggableType()
+    {
+        return 'proton_tutorial';
+    }
+
+    public function getTags()
+    {
+        $this->tags = $this->tags ?: new \Doctrine\Common\Collections\ArrayCollection();
+
+        return $this->tags;
+    }
 
 }

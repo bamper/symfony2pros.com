@@ -122,3 +122,8 @@ snc_redis:
         default:
             alias: default
             connection: default
+
+fpn_tag:
+    model:
+        tag_class: Proton\TagBundle\Entity\Tag
+        tagging_class: Proton\TagBundle\Entity\Tagging
