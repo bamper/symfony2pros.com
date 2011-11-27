@@ -21,7 +21,9 @@ class TutorialType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('tag_string')
+            ->add('tag_string', null, array(
+                'required' => false,
+            ))
             ->add('content')
         ;
 
