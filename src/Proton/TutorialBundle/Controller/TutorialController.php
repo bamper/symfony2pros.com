@@ -52,7 +52,7 @@ class TutorialController extends Controller
             $canEdit = true;
         }
 
-        if (!$this->getUser() instanceof UserInterface || !$this->getUser()->equals($tutorial->getAuthor())) {
+        if (!$this->getUser() instanceof UserInterface || (null !== $tutorial->getAuthor() && !$this->getUser()->equals($tutorial->getAuthor()))) {
             $tutorial->incrementViews();
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($tutorial);
@@ -67,12 +67,11 @@ class TutorialController extends Controller
 
     public function newAction(Request $request)
     {
-        if (!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw new AccessDeniedException();
-        }
 
         $tutorial = new Tutorial();
-        $form   = $this->createForm('proton_tutorial_tutorial', $tutorial);
+        $form   = $this->createForm('proton_tutorial_tutorial', $tutorial, array(
+            'userIsRegistered' => $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'),
+        ));
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);

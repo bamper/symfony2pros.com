@@ -10,7 +10,13 @@ abstract class Tutorial implements TutorialInterface
     protected $id;
     protected $created_at;
     protected $updated_at;
+
+    /**
+     * @var UserInterface
+     */
     protected $author;
+    protected $author_name;
+    protected $author_email;
     protected $title;
     protected $slug;
     protected $description;
@@ -41,6 +47,34 @@ abstract class Tutorial implements TutorialInterface
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    public function setAuthorName($author_name)
+    {
+        $this->author_name = $author_name;
+    }
+
+    public function getAuthorName()
+    {
+        if (null === $this->author) {
+            return $this->author_name;
+        }
+
+        return $this->author->getUsername();
+    }
+
+    public function setAuthorEmail($author_email)
+    {
+        $this->author_email = $author_email;
+    }
+
+    public function getAuthorEmail()
+    {
+        if (null === $this->author) {
+            return $this->author_email;
+        }
+
+        return $this->author->getEmail();
     }
 
     public function setTitle($title)

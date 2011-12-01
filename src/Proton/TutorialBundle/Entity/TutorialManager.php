@@ -48,7 +48,9 @@ class TutorialManager extends BaseTutorialManager
     {
         $this->em->persist($tutorial);
         $this->em->flush();
-        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', 1);
+        if (null !== $tutorial->getAuthor()) {
+            $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', 1);
+        }
     }
 
     public function updateTutorial(TutorialInterface $tutorial)
@@ -62,7 +64,9 @@ class TutorialManager extends BaseTutorialManager
         $tutorial->setTrashed(true);
         $this->em->persist($tutorial);
         $this->em->flush();
-        $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', -1);
+        if (null !== $tutorial->getAuthor()) {
+            $this->redis->hincrby(sprintf('user:%d', $tutorial->getAuthor()->getId()), 'tutorial_count', -1);
+        }
     }
 
     public function getCommentCount(TutorialInterface $tutorial)

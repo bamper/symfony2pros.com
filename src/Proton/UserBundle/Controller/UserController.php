@@ -20,4 +20,12 @@ class UserController extends Controller
         ));
     }
 
+    public function anonPlacardAction($username, $email)
+    {
+        return $this->render('ProtonUserBundle:User:anonPlacard.html.twig', array(
+            'username'  => $username,
+            'email'     => $email,
+        ));
+    }
+
 }

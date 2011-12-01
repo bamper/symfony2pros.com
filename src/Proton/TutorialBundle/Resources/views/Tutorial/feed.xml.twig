@@ -21,7 +21,7 @@
                 <link>{{ url('proton_tutorial_tutorials_show', {'slug': tutorial.slug}) }}</link>
                 <comments>{{ url('proton_tutorial_tutorials_show', {'slug': tutorial.slug}) }}#comments</comments>
                 <pubDate>{{ tutorial.createdat.format('D, d M y H:i:s O') }}</pubDate>
-                <dc:creator>{{ tutorial.author.username }}</dc:creator>
+                <dc:creator>{{ tutorial.authorname }}</dc:creator>
                 <guid isPermaLink="true">{{ url('proton_tutorial_tutorials_show', {'slug': tutorial.slug}) }}</guid>
                 <description><![CDATA[{{ tutorial.description }}]]></description>
                 <content:encoded><![CDATA[{{ tutorial.content|markdown }}]]></content:encoded>

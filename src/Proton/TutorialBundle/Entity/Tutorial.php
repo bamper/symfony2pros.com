@@ -39,6 +39,16 @@ class Tutorial extends BaseTutorial implements Taggable
     /**
      * @ORM\Column(type="string")
      */
+    protected $author_name;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $author_email;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $title;
 
     /**

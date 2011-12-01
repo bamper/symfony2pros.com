@@ -18,6 +18,12 @@ class TutorialType extends AbstractType
 
     public function buildForm(FormBuilder $builder, array $options)
     {
+        if (!$options['userIsRegistered']) {
+            $builder
+                ->add('author_name')
+                ->add('author_email')
+            ;
+        }
         $builder
             ->add('title')
             ->add('description')
@@ -30,6 +36,13 @@ class TutorialType extends AbstractType
         if (null !== $this->tagTransformer) {
             $builder->appendClientTransformer($this->tagTransformer);
         }
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        $options['userIsRegistered'] = true;
+
+        return $options;
     }
 
     public function getName()
