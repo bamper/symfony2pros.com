@@ -23,7 +23,9 @@
 {% endif %}
     <p>{{ time_formatter(tutorial.createdat) }}</p>
     <p><strong>Description:</strong> {{ tutorial.description }}</p>
+{#
     {% render 'ProtonTagBundle:Tag:display' with {"entity": tutorial} %}
+#}
     {% set views = tutorial.views %}
     <p>{% transchoice views %}
         {0} 0 views|{1} 1 view|]1,Inf] %views% views
