@@ -41,7 +41,7 @@ class AnswerController extends Controller
 
     public function newAction(Question $question, Request $request)
     {
-        if (!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             throw new AccessDeniedException();
         }
 
