@@ -71,6 +71,29 @@ jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
 
+monolog:
+    handlers:
+        mail:
+            type: fingers_crossed
+            action_level: error
+            handler: grouped
+        grouped:
+            type:    group
+            members: [streamed, buffered]
+        streamed:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+        buffered:
+            type: buffer
+            handler: swift
+        swift:
+            type: swift_mailer
+            from_email: webmaster@symfony2pros.com
+            to_email: webmaster@symfony2pros.com
+            subject: An error occured
+            level: debug
+
 # our config
 
 # 3rd-party config
