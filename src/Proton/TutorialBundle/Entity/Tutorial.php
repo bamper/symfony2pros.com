@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Proton\TutorialBundle\Model\Tutorial as BaseTutorial;
 use Gedmo\Mapping\Annotation as Gedmo;
 use DoctrineExtensions\Taggable\Taggable;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 /**
  * @ORM\Entity
@@ -80,6 +81,11 @@ class Tutorial extends BaseTutorial implements Taggable
     protected $tags;
 
     public $tag_string;
+
+    /**
+     * @Recaptcha\True
+     */
+    public $recaptcha;
 
     public function getTaggableId()
     {

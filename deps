@@ -107,3 +107,7 @@
 [FPNTagBundle]
     git=git://github.com/FabienPennequin/FPNTagBundle.git
     target=bundles/FPN/TagBundle
+
+[EWZTimeBundle]
+    git=http://github.com/excelwebzone/EWZRecaptchaBundle.git
+    target=/bundles/EWZ/Bundle/RecaptchaBundle

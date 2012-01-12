@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new FPN\TagBundle\FPNTagBundle(),
+            new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

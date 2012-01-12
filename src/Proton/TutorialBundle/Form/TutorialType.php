@@ -31,6 +31,7 @@ class TutorialType extends AbstractType
 //                'required' => false,
 //            ))
             ->add('content')
+            ->add('recaptcha', 'ewz_recaptcha')
         ;
 
         if (null !== $this->tagTransformer) {
