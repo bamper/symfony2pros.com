@@ -152,5 +152,5 @@ fpn_tag:
         tagging_class: Proton\TagBundle\Entity\Tagging
 
 ewz_recaptcha:
-    public_key:   6LdwO8wSAAAAAFX41V08RVQze3Vw-6MFx5sRp7bY
-    private_key:  6LdwO8wSAAAAAOj95oPqED4e4dDVnXCke-64W4hx
+    public_key: %ewz_recaptcha.key.public%
+    private_key: %ewz_recaptcha.key.private%
