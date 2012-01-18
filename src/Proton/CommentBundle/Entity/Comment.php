@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
 use FOS\CommentBundle\Model\SignedCommentInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\CommentBundle\Model\ThreadInterface;
 
 /**
  * @ORM\Entity
@@ -38,7 +39,7 @@ class Comment extends BaseComment implements SignedCommentInterface
         return $this->thread;
     }
 
-    public function setThread(Thread $thread)
+    public function setThread(ThreadInterface $thread)
     {
         $this->thread = $thread;
     }
