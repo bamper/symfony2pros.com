@@ -54,6 +54,7 @@ class AnswerController extends Controller
             if ($form->isValid()) {
                 $answer->setQuestion($question);
                 $answer->setAuthor($this->getUser());
+                $question->incrementAnswerCount();
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($answer);
@@ -123,6 +124,7 @@ class AnswerController extends Controller
 
             if ($form->isValid()) {
                 $answer->setTrashed(true);
+                $answer->getQuestion()->incrementAnswerCount(-1);
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($answer);
