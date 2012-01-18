@@ -25,5 +25,6 @@
         </div>
     </div>
     <input class="btn primary" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+    <a href="{{ path('fos_user_resetting_request') }}">Forgot password?</a>
 </form>
 {% endblock fos_user_content %}
