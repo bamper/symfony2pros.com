@@ -31,7 +31,7 @@ class ClientIpVoter implements VoterInterface
     public function vote(TokenInterface $token, $object, array $attributes)
     {
         $request = $this->container->get('request');
-        if ('/login' !== $request->getPathInfo() && !in_array($request->getClientIp(), $this->ipBlacklist)) {
+        if ('/login' !== $request->getPathInfo() && in_array($request->getClientIp(), $this->ipBlacklist)) {
             return VoterInterface::ACCESS_DENIED;
         }
 
