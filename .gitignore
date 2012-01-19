@@ -4,4 +4,5 @@ app/logs
 web/bundles/
 vendor/
 app/bootstrap.php.cache
+app/config/ip_blacklist.yml
 

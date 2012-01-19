@@ -3,3 +3,11 @@ services:
         class: Proton\CoreBundle\Parser\PurifyMarkdownParser
         arguments:
             purifier: "@exercise_html_purifier.simple"
+    proton.security.access.blacklist_voter:
+        class: Proton\CoreBundle\Security\Authorization\Voter\ClientIpVoter
+        arguments:
+            container: "@service_container"
+            ipBlacklist: %ip_blacklist%
+            public: false
+            tags:
+                - { name:security.voter }

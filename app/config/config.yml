@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: ip_blacklist.yml }
     - { resource: security.yml }
 
 framework:
