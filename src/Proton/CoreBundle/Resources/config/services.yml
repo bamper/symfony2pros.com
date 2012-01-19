@@ -8,6 +8,6 @@ services:
         arguments:
             container: "@service_container"
             ipBlacklist: %ip_blacklist%
-            public: false
-            tags:
-                - { name:security.voter }
+        public: false
+        tags:
+            - { name: security.voter }
