@@ -48,7 +48,7 @@ class TutorialController extends Controller
 
         $canEdit = false;
         if ($this->container->get('security.context')->isGranted('ROLE_ADMIN') ||
-            ($this->getUser() instanceof UserInterface && $this->getUser()->equals($tutorial->getAuthor()))) {
+            (null !== $tutorial->getAuthor() && $this->getUser() instanceof UserInterface && $this->getUser()->equals($tutorial->getAuthor()))) {
             $canEdit = true;
         }
 
