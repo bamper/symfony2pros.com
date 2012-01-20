@@ -44,5 +44,9 @@
 <hr />
 
 <h2 id="comments">Comments</h2>
-{% render "FOSCommentBundle:Thread:showFlat" with {"id": tutorial.slug, "sorter": "date_desc"} %}
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% render "FOSCommentBundle:Thread:showFlat" with {"id": tutorial.slug, "sorter": "date_desc"} %}
+{% else %}
+    <p><a href="{{ path('fos_user_security_login') }}">Sign in</a> to participate.</p>
+{% endif %}
 {% endblock %}
